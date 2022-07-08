@@ -1,3 +1,9 @@
+//The selection sort algorithm sorts an array by repeatedly finding the minimum element (considering ascending order) from unsorted part and putting it at the beginning
+
+// time complexity = O(N)*O(N) = O(N*N) = O(N2)
+
+// Auxiliary Space: O(1) 
+
 #include<iostream>
 using namespace std;
 
