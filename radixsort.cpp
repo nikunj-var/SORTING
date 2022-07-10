@@ -1,46 +1,34 @@
-//TC->O(n+k),n is the number of elements and k is the range
-//SC->O(n+k)
-
-//sorting according to keys
-//counting the elements having distinct key values
-
-//find the minimum and maximum value
-//make max value as key
-//create a count array of size k+1
-//initialize count array as 0
-//update count array
-//store the values
-
-
 #include<iostream>
 using namespace std;
 
-void countingsort(int arr[],int n){
-    int max=0;
-    int output[n];
-
-    //find max value
+int getmax(int arr[],int n){
+    int max;
     for(int i=0;i<n;i++){
         if(arr[i]>max){
             max=arr[i];
         }
-    } 
+    }
+    return max;
+}
+
+void countsort(int arr[],int n,int pos){
+    int output[n];
 
     //create count array
-    int count[max+1]={0};
+    int count[10]={0};
     for(int i=0;i<n;i++){
-        count[arr[i]]++;
+        count[(arr[i]/pos)%10]++;
     }
 
     //Change count[i] so that count[i] now contains actual
     // position of this character in output array
-    for(int i=1;i<=max;i++){
+    for(int i=1;i<=9;i++){
         count[i]+=count[i-1];
     }
 
     //first decrease the count[i], then store the value at indexes
     for(int i=n-1;i>=0;i--){
-        output[--count[arr[i]]]=arr[i];
+        output[--count[(arr[i]/pos)%10]]=arr[i];
     }
 
     //update original array
@@ -50,6 +38,13 @@ void countingsort(int arr[],int n){
 
     //delete output array
    // delete []output;
+}
+
+void radixsort(int arr[],int n){
+    int max=getmax(arr,n);
+    for(int pos=1;max/pos>0;pos=pos*10){
+        countsort(arr,n,pos);
+    }
 }
 
 void printarray(int arr[],int n){
@@ -68,7 +63,7 @@ int main(){
     for(int i=0;i<n;i++){
         cin>>arr[i];
     }
-    countingsort(arr,n);
+    radixsort(arr,n);
     printarray(arr,n);
 }
 
